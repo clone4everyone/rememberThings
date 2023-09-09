@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        body{
+            background-color: rgb(197, 96, 96);
+        }
+        .outer{
+            display: flex;
+            flex-direction: column;
+            width:100%;
+            align-items: center;
+            justify-content: space-evenly;
+            background-color: bisque;
+        }
+        .header{
+            width:100%;
+            height:50px;
+            border:solid 1px yellow;
+            color:white;
+            background-color: rgb(166, 166, 8);
+            display: flex;
+            align-items: center;
+           padding: 10px;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+        .textarea{
+            width:500px;
+            height:200px
+        }
+        .submit{
+            background-color: blue;
+            padding:10px;
+            color:white;
+            border: none;
+            border-radius: 7px;
+        }
+        #add{
+            cursor: pointer;
+        }
+        .p{
+            border-bottom: solid 2px black;
+        }
+        .container{
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            width:400px
+        }
+        #span{
+     cursor: pointer;
+        }
+        .list{
+            background-color: rgb(246, 165, 65);
+        }
+        .empty{
+         width:1200px;
+         height:500px;
+          
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+         <div class="header">
+       KEEP THINGS READY
+       <p ><span class="fa" id="add">&#xf2ba;</span></p>
+    </div>
+
+    <div class="div1">
+      
+    </div>
+
+    <div class="list">
+    <img src="img/empty.webp" class="empty"/>
+    </div>
+    
+</div>
+   
+
+    <script>
+        const div1=document.querySelector('.div1');
+        const add=document.getElementById('add');
+        const list=document.querySelector('.list');
+         const submit=document.querySelector(`.submit`);
+      const empty=document.querySelector('.empty');
+
+
+
+    let arr=[];
+
+   
+   
+    const submi=(idno)=>{
+        
+          let id=document.getElementById(`${idno}`);
+          let done=document.getElementById('done');
+          if(done.value!=''){
+          id.innerHTML=done.value;
+      div1.innerHTML="";
+          }
+    }
+
+const rewrite=(elem,idno)=>{
+ 
+let span=document.getElementById('span');
+div1.innerHTML=`<textarea class="textarea" id="done">${elem}</textarea> <button class="submit" onclick="submi(${idno})" >submit</button>`
+}
+
+const anothercall=()=>{
+    let data='';
+
+    if(arr.length===0){
+        list.innerHTML='<img src="img/empty.webp" class="empty"/>'
+    }
+    else{
+        arr.map((elem,index)=>{
+    data+=`<div class="container">
+        <p class="p" id='${index}'>${elem}</p> <div><span class="fa" id="span" onclick="rewrite('${elem}','${index}')">&#xf044;</span> 
+            <button class="fa" 
+             onclick="arr.splice(${index},1)  
+   anothercall()">&#xf119; delete</button></div>
+        </div>`
+  })
+  list.innerHTML=data;
+  div1.innerHTML="";
+}
+    
+  
+}
+const call=()=>{ 
+  let textarea=document.querySelector(`.textarea`);
+
+  if(textarea.value!=''){
+    arr=[...arr,textarea.value];
+  textarea.value="";
+  let data='';
+  arr.map((elem,index)=>{
+    data+=`<div class="container">
+        <p class="p" id='${index}'>${elem}</p> <div><span class="fa" id="span" onclick="rewrite('${elem}','${index}')">&#xf044;</span> 
+            <button class="fa" 
+             onclick="arr.splice(${index},1)  
+   anothercall()">&#xf119; delete</button></div>
+        </div>`
+  })
+  list.innerHTML=data;
+  div1.innerHTML="";
+}
+   
+}
+
+
+
+
+
+        const textare=()=>{
+            div1.innerHTML=` <textarea class="textarea"></textarea>
+            <button class="submit" onclick="call()" >submit</button>`;
+        }
+
+
+       
+       
+        add.addEventListener('click',textare)
+    </script>
+</body>
+</html>
